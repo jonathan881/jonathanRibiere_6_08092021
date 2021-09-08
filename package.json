@@ -4,8 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathan881/jonathanRibiere_6_08092021.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathan881/jonathanRibiere_6_08092021/issues"
+  },
+  "homepage": "https://github.com/jonathan881/jonathanRibiere_6_08092021#readme"
 }
