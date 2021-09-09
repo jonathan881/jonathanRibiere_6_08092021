@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use("/api/sauces", saucesRoutes);
+app.use("/api/auth", userRoutes);
 
 //Sert a exportée pour d'autre fichier
 module.exports = app;
