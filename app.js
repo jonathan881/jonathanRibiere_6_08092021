@@ -44,6 +44,18 @@ app.post("/api/sauces", (req, res, next) => {
     .then(() => res.status(201).json({ message: "Objet enregistré !" }))
     .catch((error) => res.status(400).json({ error }));
 });
+//Modification d'un objet séléctionée grace a son id
+app.put("/api/sauces/:id", (req, res, next) => {
+  Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet modifié !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
+//Suppression d'un objet séléctioné par son id
+app.delete("/api/sauces/:id", (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
 
 //Trouver un seul Objet dynamique par son identifiant
 app.get("/api.sauces/:id", (req, res, next) => {
