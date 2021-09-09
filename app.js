@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const saucesRoutes = require("./routes/sauces");
+const userRoutes = require("./routes/user");
 
 //Logique pour se conectée a MongoDB
 mongoose
