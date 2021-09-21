@@ -1,5 +1,5 @@
-//Cette variable sert a importer express
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const saucesRoutes = require("./routes/sauces");
@@ -14,19 +14,15 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-//Cette variable sert a créer une application express
-const app = express();
-
-//Use traite touttes les requete "cors"
 app.use((req, res, next) => {
-  //Ce headers permet d'accéder à notre API depuis n'importe quelle origine ( '*' )
+  //accéder à notre API depuis n'importe quelle origine ( '*' )
   res.setHeader("Access-Control-Allow-Origin", "*");
-  //Ce headers permet d'ajouter les headers mentionnés aux requêtes envoyées vers notre API (Origin , X-Requested-With , etc.) ;
+  //ajouter les headers mentionnés aux requêtes envoyées vers notre API
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
   );
-  //Ce headers permetd'envoyer des requêtes avec les méthodes mentionnées ( GET ,POST , etc.).
+  //envoyer des requêtes avec les méthodes mentionnées
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
@@ -39,5 +35,4 @@ app.use(bodyParser.json());
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 
-//Sert a exportée pour d'autre fichier
 module.exports = app;

@@ -16,6 +16,8 @@ const normalizePort = (val) => {
   }
   return false;
 };
+
+//Sert a dire a l'application express sur quel port elle va tournée
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 

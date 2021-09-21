@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-//schéma de données qui contient les champs souhaités pour chaque Thing,
+//schéma de données qui contient les champs souhaités pour chaque sauce,
 //indique leur type ainsi que leur caractère (obligatoire ou non)
-const thingSchema = mongoose.Schema({
+const sauceSchema = mongoose.Schema({
   name: { type: String, require: true },
   manufacturer: { type: String, require: true },
   description: { type: String, require: true },
@@ -11,10 +11,10 @@ const thingSchema = mongoose.Schema({
   heat: { type: Number, require: true },
   likes: { type: Number, require: true },
   dislikes: { type: Number, require: true },
-  usersLiked: { type: String, require: true },
-  usersDisliked: { type: String, require: true },
+  // usersLiked: { type: String, require: true },
+  // usersDisliked: { type: String, require: true },
 });
 
-//ensuite, nous exportons ce schéma en tant que modèle Mongoose appelé « Thing »,
+//ensuite, nous exportons ce schéma en tant que modèle Mongoose appelé « sauce »,
 //le rendant par là même disponible pour notre application Express.
-module.exports = mongoose.model("Thing", thingSchema);
+module.exports = mongoose.model("sauce", sauceSchema);
