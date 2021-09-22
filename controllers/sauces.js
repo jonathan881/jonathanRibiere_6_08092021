@@ -1,11 +1,16 @@
 //****************** Controllers sert a stocké toute la logique métier */
 const sauces = require("../models/sauces");
+const fs = require("fs");
 
 //On export la fonction "createSauce" pour la création d'un Objet
 exports.createSauce = (req, res, next) => {
-  delete req.body._id;
-  const sauce = new sauce({
-    ...req.body,
+  const sauceObject = JSON.parse(req.body.sauce);
+  delete sauceObject._id;
+  const sauce = new sauces({
+    ...sauceObject,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
   });
   sauce
     .save()
@@ -15,8 +20,16 @@ exports.createSauce = (req, res, next) => {
 
 //On export la fonction "modifySauce" pour la modification d'un Objet
 exports.modifySauce = (req, res, next) => {
+  const sauceObject = req.file
+    ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
   sauce
-    .updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: "Objet modifié !" }))
     .catch((error) => res.status(400).json({ error }));
 };
@@ -24,9 +37,17 @@ exports.modifySauce = (req, res, next) => {
 //On export la fonction "deleteSauce" pour la suppression d'un Objet
 exports.deleteSauce = (req, res, next) => {
   sauce
-    .deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
-    .catch((error) => res.status(400).json({ error }));
+    .findOne({ _id: req.params.id })
+    .then((sauce) => {
+      const filename = sauce.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        sauce
+          .deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
 
 //On export la fonction "getOneSauce" pour récupéré un seul Objet
