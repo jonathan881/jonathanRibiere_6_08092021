@@ -28,7 +28,7 @@ exports.modifySauce = (req, res, next) => {
         }`,
       }
     : { ...req.body };
-  sauce
+  sauces
     .updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: "Objet modifié !" }))
     .catch((error) => res.status(400).json({ error }));
@@ -36,7 +36,7 @@ exports.modifySauce = (req, res, next) => {
 
 //On export la fonction "deleteSauce" pour la suppression d'un Objet
 exports.deleteSauce = (req, res, next) => {
-  sauce
+  sauces
     .findOne({ _id: req.params.id })
     .then((sauce) => {
       const filename = sauce.imageUrl.split("/images/")[1];
@@ -52,7 +52,7 @@ exports.deleteSauce = (req, res, next) => {
 
 //On export la fonction "getOneSauce" pour récupéré un seul Objet
 exports.getOneSauce = (req, res, next) => {
-  sauce
+  sauces
     .findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
@@ -60,7 +60,7 @@ exports.getOneSauce = (req, res, next) => {
 
 //On export la fonction "getAllSauce" pour récupéré tous les Objets
 exports.getAllSauce = (req, res, next) => {
-  sauce
+  sauces
     .find()
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error }));
