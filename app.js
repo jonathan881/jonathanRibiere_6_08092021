@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -5,8 +6,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
-const testRoutes = require("./routes/test");
-require("dotenv").config();
 
 //Logique pour se conectée a MongoDB
 mongoose
@@ -37,7 +36,6 @@ app.use(bodyParser.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/test", testRoutes);
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 
