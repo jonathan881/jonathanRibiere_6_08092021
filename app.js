@@ -1,4 +1,5 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -6,11 +7,14 @@ const mongoose = require("mongoose");
 const path = require("path");
 const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
+const myName = process.env.USERNAME;
+const password = process.env.PSWD;
+const mongoDB = process.env.MONGODBHOST;
 
 //Logique pour se conectée a MongoDB
 mongoose
   .connect(
-    "mongodb+srv://${process.env.USERNAME}:${process.env.PWD}@${process.env.MONGODBHOST}/myFirstDatabase?retryWrites=true&w=majority",
+    `mongodb+srv://${myName}:${password}@${mongoDB}/myFirstDatabase?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
