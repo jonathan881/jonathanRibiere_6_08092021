@@ -19,6 +19,7 @@ exports.createSauce = (req, res, next) => {
 };
 
 //On export la fonction "modifySauce" pour la modification d'un Objet
+//On export la fonction "modifySauce" pour la modification d'un Objet
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
@@ -28,34 +29,10 @@ exports.modifySauce = (req, res, next) => {
         }`,
       }
     : { ...req.body };
-  if (req.file) {
-    sauces
-      .findOne({ _id: req.params.id })
-      .then((sauce) => {
-        const filename = sauce.imageUrl.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-          sauce
-            .updateOne(
-              { _id: req.params.id },
-              { ...sauceObject, _id: req.params.id }
-            )
-            .then(() => {
-              res.status(200).json({ message: "Sauce mise à jour!" });
-            })
-            .catch((error) => {
-              res.status(400).json({ error });
-            });
-        });
-      })
-      .catch((error) => {
-        res.status(500).json({ error });
-      });
-  } else {
-    sauces
-      .updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-      .then(() => res.status(200).json({ message: "Sauce mise à jour!" }))
-      .catch((error) => res.status(400).json({ error }));
-  }
+  sauces
+    .updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet modifié !" }))
+    .catch((error) => res.status(400).json({ error }));
 };
 
 //On export la fonction "deleteSauce" pour la suppression d'un Objet
