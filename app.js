@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
+const helmet = require("helmet");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -10,6 +11,9 @@ const userRoutes = require("./routes/user");
 const myName = process.env.USERNAME;
 const password = process.env.PSWD;
 const mongoDB = process.env.MONGODBHOST;
+
+//Helmet aide à sécuriser les applications Express en définissant divers en-têtes HTTP
+app.use(helmet());
 
 //Logique pour se conectée a MongoDB
 mongoose
@@ -22,7 +26,7 @@ mongoose
 
 app.use((req, res, next) => {
   //accéder à notre API depuis n'importe quelle origine ( '*' )
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", process.env.ALLOWED_CORS);
   //ajouter les headers mentionnés aux requêtes envoyées vers notre API
   res.setHeader(
     "Access-Control-Allow-Headers",
